@@ -98,6 +98,12 @@ public class Pois implements ForwardingProfile.LayerPostProcessor {
       } else if (sf.hasTag("amenity", "cafe")) {
         kind = sf.getString("amenity");
         minZoom = 15;
+      } else if (sf.hasTag("amenity", "fuel")) {
+        kind = sf.getString("amenity");
+        minZoom = 7;
+      } else if (sf.hasTag("barrier", "border_control")) {
+        kind = sf.getString("barrier");
+        minZoom = 5;
       } else if (sf.hasTag("landuse", "cemetery")) {
         kind = sf.getString("landuse");
         minZoom = 14;
@@ -542,6 +548,13 @@ public class Pois implements ForwardingProfile.LayerPostProcessor {
           sf.hasTag("tourism", "artwork", "hanami", "trail_riding_station", "bed_and_breakfast", "chalet",
             "guest_house", "hostel")) {
           pointFeature.setAttr("min_zoom", 17);
+        }
+
+        if (sf.hasTag("barrier", "border_control")) {
+          pointFeature.setAttr("min_zoom", 5);
+        }
+        if (sf.hasTag("amenity", "fuel")) {
+          pointFeature.setAttr("min_zoom", 7);
         }
 
         // Server sort features so client label collisions are pre-sorted

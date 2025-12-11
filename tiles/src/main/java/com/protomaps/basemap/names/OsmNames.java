@@ -17,47 +17,47 @@ public class OsmNames {
   private OsmNames() {}
 
   private static final String[] ALLOWED_LANGS = new String[]{
-    "ar", // Arabic
-    "cs", // Czech
-    "bg", // Bulgarian
-    "da", // Danish
+    // "ar", // Arabic
+    // "cs", // Czech
+    // "bg", // Bulgarian
+    // "da", // Danish
     "de", // German
-    "el", // Greek
+    // "el", // Greek
     "en", // English
     "es", // Spanish
-    "et", // Estonian
-    "fa", // Persian
-    "fi", // Finnish
+    // "et", // Estonian
+    // "fa", // Persian
+    // "fi", // Finnish
     "fr", // French
-    "ga", // Irish
-    "he", // Hebrew
-    "hi", // Hindi
-    "hr", // Croatian
-    "hu", // Hungarian
-    "id", // Indonesian
+    // "ga", // Irish
+    // "he", // Hebrew
+    // "hi", // Hindi
+    // "hr", // Croatian
+    // "hu", // Hungarian
+    // "id", // Indonesian
     "it", // Italian
     "ja", // Japanese
-    "ko", // Korean
-    "lt", // Lithuanian
-    "lv", // Latvian
-    "ne", // Nepali
+    // "ko", // Korean
+    // "lt", // Lithuanian
+    // "lv", // Latvian
+    // "ne", // Nepali
     "nl", // Dutch
-    "no", // Norwegian
-    "mr", // Marathi
-    "mt", // Maltese
-    "pl", // Polish
+    // "no", // Norwegian
+    // "mr", // Marathi
+    // "mt", // Maltese
+    // "pl", // Polish
     "pt", // Portuguese
-    "ro", // Romanian
-    "ru", // Russian
-    "sk", // Slovak
-    "sl", // Slovenian
-    "sv", // Swedish
-    "tr", // Turkish
-    "uk", // Ukrainian
-    "ur", // Urdu
-    "vi", // Vietnamese
-    "zh-Hans", // Chinese (Simplified)
-    "zh-Hant" // Chinese (Traditional)
+    // "ro", // Romanian
+    // "ru", // Russian
+    // "sk", // Slovak
+    // "sl", // Slovenian
+    // "sv", // Swedish
+    // "tr", // Turkish
+    // "uk", // Ukrainian
+    // "ur", // Urdu
+    // "vi", // Vietnamese
+    // "zh-Hans", // Chinese (Simplified)
+    // "zh-Hant" // Chinese (Traditional)
   };
 
   private static final Set<String> ALLOWED_LANG_SET =
@@ -125,6 +125,9 @@ public class OsmNames {
       }
 
       if (isAllowed(key)) {
+        if (key.startsWith("name:")) {
+          key = key.replace(":", "_");
+        }
         feature.setAttrWithMinzoom(key, value, minZoom);
 
         if (fontRegistry.getScripts().contains(script)) {
