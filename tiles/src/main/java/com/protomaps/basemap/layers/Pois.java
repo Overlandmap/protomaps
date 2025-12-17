@@ -48,6 +48,7 @@ public class Pois implements ForwardingProfile.LayerPostProcessor {
       sf.hasTag("amenity") ||
       sf.hasTag("attraction") ||
       sf.hasTag("boundary", "national_park", "protected_area") ||
+      sf.hasTag("barrier") ||
       sf.hasTag("craft") ||
       sf.hasTag("historic") ||
       sf.hasTag("landuse", "cemetery", "recreation_ground", "winter_sports", "quarry", "park", "forest", "military",
