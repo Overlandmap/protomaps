@@ -23,8 +23,19 @@ import com.protomaps.basemap.locales.CartographicLocale;
 import com.protomaps.basemap.names.OsmNames;
 import java.util.*;
 
+
 @SuppressWarnings("java:S1192")
 public class Roads implements ForwardingProfile.LayerPostProcessor, ForwardingProfile.OsmRelationPreprocessor {
+
+
+  private static final Set<String> SURFACE_UNPAVED_VALUES = Set.of(
+    "unpaved", "compacted", "dirt", "earth", "fine_gravel", "grass", "grass_paver", "gravel", "gravel_turf", "ground",
+    "ice", "mud", "pebblestone", "salt", "sand", "snow", "woodchips", "rock"
+  );
+  private static final Set<String> SURFACE_PAVED_VALUES = Set.of(
+    "paved", "asphalt", "cobblestone", "concrete", "concrete:lanes", "concrete:plates", "metal",
+    "paving_stones", "sett", "unhewn_cobblestone", "wood", "grade1", "pebblestone"
+);
 
   private final CountryCoder countryCoder;
 
@@ -276,9 +287,10 @@ public class Roads implements ForwardingProfile.LayerPostProcessor, ForwardingPr
       use("minZoom", 13)
     ),
     rule(
-      with("route", "ferry"),
+      with("ferry"),
       use("kind", "ferry"),
-      use("minZoom", 11)
+      use("kindDetail", fromTag("ferry")),
+      use("minZoom", 6)
     ),
     rule(
       with("aeroway", "taxiway"),
@@ -402,6 +414,23 @@ public class Roads implements ForwardingProfile.LayerPostProcessor, ForwardingPr
     } else if (sf.hasTag("tunnel") && !sf.hasTag("tunnel", "no")) {
       feat.setAttrWithMinzoom("is_tunnel", true, 12);
     }
+
+    if (sf.hasTag("winter_road") && !sf.hasTag("winter_road", "no")) {
+      feat.setAttr("winter_road", true);
+    }
+    if (sf.hasTag("ice_road") && !sf.hasTag("ice_road", "no")) {
+      feat.setAttr("ice_road", true);
+    }
+    if (sf.hasTag("surface")) {
+      String surfaceValue = sf.getString("surface");
+      if (SURFACE_PAVED_VALUES.contains(surfaceValue)) {
+        feat.setAttr("paved", true);
+      } else if (SURFACE_UNPAVED_VALUES.contains(surfaceValue)) {
+        feat.setAttr("paved", false);
+      }
+      feat.setAttr("surface", surfaceValue);
+    }
+
 
     // Server sort features so client label collisions are pre-sorted
     feat.setSortKey(minZoom);
