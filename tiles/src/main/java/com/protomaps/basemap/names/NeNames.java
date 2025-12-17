@@ -22,9 +22,9 @@ public class NeNames {
       String value = sf.getTag(key).toString();
       var script = Script.getScript(value);
 
-      // if (key.startsWith("name_")) {
-      //   key = key.replace("_", ":");
-      // }
+      if (key.startsWith("name_")) {
+        key = key.replace("_", ":");
+      }
 
       if (key.equals("name")) {
         feature.setAttrWithMinzoom("name", value, minZoom);

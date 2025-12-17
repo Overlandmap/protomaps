@@ -17,7 +17,7 @@ public class OsmNames {
   private OsmNames() {}
 
   private static final String[] ALLOWED_LANGS = new String[]{
-    // "ar", // Arabic
+    "ar", // Arabic
     // "cs", // Czech
     // "bg", // Bulgarian
     // "da", // Danish
@@ -45,10 +45,10 @@ public class OsmNames {
     // "no", // Norwegian
     // "mr", // Marathi
     // "mt", // Maltese
-    // "pl", // Polish
+    "pl", // Polish
     "pt", // Portuguese
     // "ro", // Romanian
-    // "ru", // Russian
+    "ru", // Russian
     // "sk", // Slovak
     // "sl", // Slovenian
     // "sv", // Swedish
@@ -125,9 +125,9 @@ public class OsmNames {
       }
 
       if (isAllowed(key)) {
-        if (key.startsWith("name:")) {
-          key = key.replace(":", "_");
-        }
+        // if (key.startsWith("name:")) {
+        //   key = key.replace(":", "_");
+        // }
         feature.setAttrWithMinzoom(key, value, minZoom);
 
         if (fontRegistry.getScripts().contains(script)) {
@@ -141,7 +141,7 @@ public class OsmNames {
     }
 
     // Backfill name:zh to name:zh-Hant and name:zh-Hans if those are not available
-    if (sf.hasTag("name:zh")) {
+    if (sf.hasTag("name:zh") && isAllowed("zh")) {
       if (!sf.hasTag("name:zh-Hant")) {
         feature.setAttrWithMinzoom("name:zh-Hant", sf.getTag("name:zh"), minZoom);
       }
