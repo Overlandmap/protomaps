@@ -83,7 +83,7 @@ public class Places implements ForwardingProfile.LayerPostProcessor {
           town
         """),
       use("kind", "locality"),
-      use("minZoom", 7),
+      use("minZoom", 5),
       use("maxZoom", 15),
       use("kindRank", 2)
     ),
@@ -91,13 +91,13 @@ public class Places implements ForwardingProfile.LayerPostProcessor {
       with("place", "city"),
       without("population"),
       use("population", 5000),
-      use("minZoom", 4)
+      use("minZoom", 6)
     ),
     rule(
       with("place", "town"),
       without("population"),
       use("population", 10000),
-      use("minZoom", 5)
+      use("minZoom", 7)
     ),
     rule(
       with("place", "village"),
