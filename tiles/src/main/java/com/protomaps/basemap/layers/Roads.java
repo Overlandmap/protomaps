@@ -287,9 +287,9 @@ public class Roads implements ForwardingProfile.LayerPostProcessor, ForwardingPr
       use("minZoom", 13)
     ),
     rule(
-      with("ferry"),
+      with("route", "ferry"),
       use("kind", "ferry"),
-      use("kindDetail", fromTag("ferry")),
+      use("motor_vehicle", fromTag("motor_vehicle")),
       use("minZoom", 6)
     ),
     rule(
@@ -410,9 +410,9 @@ public class Roads implements ForwardingProfile.LayerPostProcessor, ForwardingPr
     // Set "brunnel" (bridge / tunnel) property where "level" = 1 is a bridge, 0 is ground level, and -1 is a tunnel
     // Because of MapLibre performance and draw order limitations, generally the boolean is sufficent
     if (sf.hasTag("bridge") && !sf.hasTag("bridge", "no")) {
-      feat.setAttrWithMinzoom("is_bridge", true, 12);
+      feat.setAttrWithMinzoom("is_bridge", true, 10);
     } else if (sf.hasTag("tunnel") && !sf.hasTag("tunnel", "no")) {
-      feat.setAttrWithMinzoom("is_tunnel", true, 12);
+      feat.setAttrWithMinzoom("is_tunnel", true, 10);
     }
 
     if (sf.hasTag("winter_road") && !sf.hasTag("winter_road", "no")) {
