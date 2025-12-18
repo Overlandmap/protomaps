@@ -46,6 +46,7 @@ public class Pois implements ForwardingProfile.LayerPostProcessor {
   public void processOsm(SourceFeature sf, FeatureCollector features) {
     if ((sf.isPoint() || sf.canBePolygon()) && (sf.hasTag("aeroway", "aerodrome") ||
       sf.hasTag("amenity") ||
+      sf.hasTag("mountain_pass") ||
       sf.hasTag("attraction") ||
       sf.hasTag("boundary", "national_park", "protected_area") ||
       sf.hasTag("barrier") ||
@@ -105,6 +106,9 @@ public class Pois implements ForwardingProfile.LayerPostProcessor {
       } else if (sf.hasTag("barrier", "border_control")) {
         kind = sf.getString("barrier");
         minZoom = 5;
+      } else if (sf.hasTag("mountain_pass")) {
+        kind = "mountain_pass";
+        minZoom = 7;
       } else if (sf.hasTag("landuse", "cemetery")) {
         kind = sf.getString("landuse");
         minZoom = 14;
@@ -556,6 +560,22 @@ public class Pois implements ForwardingProfile.LayerPostProcessor {
         }
         if (sf.hasTag("amenity", "fuel")) {
           pointFeature.setAttr("min_zoom", 7);
+        }
+        if (sf.hasTag("mountain_pass")) {
+          pointFeature.setAttr("min_zoom", 7);
+        }
+        if (sf.hasTag("natural", "peak") || sf.hasTag("mountain_pass")) {
+          String elevation = sf.getString("ele");
+          if (elevation != null) {
+            pointFeature.setAttr("ele", elevation);
+            // convert from meters to feet
+            try {
+              double eleFeet = Double.parseDouble(elevation) * 3.28084;
+              pointFeature.setAttr("ele_ft", String.valueOf(Math.round(eleFeet)));
+            } catch (NumberFormatException e) {
+              // ignore invalid ele tag
+            }
+          }
         }
 
         // Server sort features so client label collisions are pre-sorted
