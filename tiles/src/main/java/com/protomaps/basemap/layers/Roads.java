@@ -290,7 +290,7 @@ public class Roads implements ForwardingProfile.LayerPostProcessor, ForwardingPr
       with("route", "ferry"),
       use("kind", "ferry"),
       use("motor_vehicle", fromTag("motor_vehicle")),
-      use("minZoom", 6)
+      use("minZoom", 5)
     ),
     rule(
       with("aeroway", "taxiway"),
