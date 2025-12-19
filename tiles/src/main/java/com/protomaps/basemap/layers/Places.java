@@ -109,20 +109,20 @@ public class Places implements ForwardingProfile.LayerPostProcessor {
     rule(
       with("place", "village"),
       without("population"),
-      use("minZoom", 8),
+      use("minZoom", 7),
       use("population", 2000)
     ),
     rule(
       with("place", "locality"),
       use("kind", "locality"),
-      use("minZoom", 11),
+      use("minZoom", 8),
       use("maxZoom", 15),
       use("kindRank", 4)
     ),
     rule(
       with("place", "locality"),
       without("population"),
-      use("minZoom", 12),
+      use("minZoom", 9),
       use("population", 1000)
     ),
     rule(
@@ -351,10 +351,10 @@ public class Places implements ForwardingProfile.LayerPostProcessor {
       // Core OSM tags for different kinds of places
       .setAttr("capital", sf.getString("capital"))
       .setAttr("population", population)
-      .setAttr("population_rank", populationRank)
+      .setAttr("population_rank", populationRank);
       // Generally we use NE and low zooms, and OSM at high zooms
       // With exceptions for country and region labels
-      .setZoomRange(minZoom, maxZoom);
+      // .setZoomRange(minZoom, maxZoom);
 
     // Instead of exporting ISO country_code_iso3166_1_alpha_2 (which are sparse), we export Wikidata IDs
     if (sf.hasTag("wikidata")) {
