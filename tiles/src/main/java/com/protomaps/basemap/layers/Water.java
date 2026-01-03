@@ -412,6 +412,7 @@ public class Water implements ForwardingProfile.LayerPostProcessor {
           break;
         }
       }
+      nameMinZoom = nameMinZoom - 1;
 
       nameMinZoom = getInteger(sf, matches, "minZoom", nameMinZoom);
 
